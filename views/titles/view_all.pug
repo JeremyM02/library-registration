@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+    h3 Books
+    //a(href='/titles/add') Add New Title
+    table
+        thead
+            tr
+                th Book Title
+                th Description
+                th Publisher
+                th Genre
+                th # of Pages
+                th Cover Image
+                th
+        tbody
+            each book in books
+                tr
+                    td= book.title
+                    td= book.description
+                    td= book.publisher
+                    td= book.genre
+                    td= book.page_amount
+                    td= book.cover_image
+                    //td
+                    //    a(href=`/courses/profile/${course.id}`) View Course
