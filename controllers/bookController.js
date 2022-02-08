@@ -70,7 +70,7 @@ module.exports.updateCourse = async function(req, res) {
 };
 
 //delete
-module.exports.removeBook = async function(req, res) {
+module.exports.deleteBook = async function(req, res) {
     await Books.destroy( {
         where: {
             id: req.params.id
