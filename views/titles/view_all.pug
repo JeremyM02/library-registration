@@ -2,7 +2,7 @@ extends ../layout
 
 block content
     h3 Books
-    //a(href='/titles/add') Add New Title
+    a(href='/titles/add') Add New Title
     table
         thead
             tr
@@ -22,5 +22,5 @@ block content
                     td= book.genre
                     td= book.page_amount
                     td= book.cover_image
-                    //td
-                    //    a(href=`/courses/profile/${course.id}`) View Course
+                    td
+                        a(href=`/courses/profile/${course.id}`) View Course
