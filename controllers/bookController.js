@@ -1,10 +1,10 @@
 const {Books} = require('../models');
-const {genres} = ['classic', 'not classic'].sort();
+const genres = ['classic', 'not classic'].sort();
 
 //view all
-module.exports.viewAll = async function(req, res){
+module.exports.viewAll = async function(req, res) {
     const books = await Books.findAll();
-    res.render('books/view_all', {books});
+    res.render('books/view_all',{books});
 };
 
 //profile
@@ -53,7 +53,7 @@ module.exports.renderEditForm = async function(req, res) {
 };
 
 //update
-module.exports.updateCourse = async function(req, res) {
+module.exports.updateBook = async function(req, res) {
     await Books.update( {
         title: req.body.title,
         publisher: req.body.publisher,
