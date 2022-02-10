@@ -7,7 +7,18 @@ block content
     div
         h3 Name: #{author.first_name} #{author.last_name}
         p Date Of Birth: #{author.date_of_birth}
-
+    div.books
+        tbody
+            each book in books
+                tr
+                    td= book.title
+                    td= book.description
+                    td= book.publisher
+                    td= book.genre
+                    td= book.page_amount
+                    td= book.cover_image
+                    td
+                        a(href=`/courses/profile/${course.id}`) View Course
     //h4 Student Courses
     //if availableCourses.length>0
     //    form(action=`/students/${student.id}/enroll/` method='post')

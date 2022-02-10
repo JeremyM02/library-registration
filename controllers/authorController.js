@@ -9,7 +9,9 @@ module.exports.viewAll = async function(req, res){
 
 //profile
 module.exports.viewProfile = async function(req, res) {
-    const author = await Author.findByPk(req.params.id);
+    const author = await Author.findByPk(req.params.id, {
+        include: 'books'
+    });
     res.render('author/profile', {author})
 };
 
@@ -55,7 +57,7 @@ module.exports.renderEditForm = async function(req, res) {
 
 //update
 module.exports.updateAuthor = async function(req, res) {
-    const author = await Author.update( {
+    await Author.update( {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         date_of_birth: req.body.date_of_birth
@@ -77,3 +79,12 @@ module.exports.deleteAuthor = async function(req,res) {
     });
     res.redirect('/authors');
 };
+
+function authorHasBook(author, book) {
+    for (let i=0; i<author.books.length; i++){
+        if (book.id === author.books[i].id) {
+            return true
+        }
+    }
+    return false
+}

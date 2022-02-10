@@ -12,9 +12,9 @@ block content
                 th
         tbody
             each author in authors
-                tr
+                 tr
                     td= book.first_name
                     td= book.last_name
                     td= book.date_of_birth
                     td
-                        a(href=`/authors/profile/${author.id}`) View Student
+                        a(href=`/authors/profile/${author.id}`) View Author
