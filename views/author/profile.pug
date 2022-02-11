@@ -24,21 +24,22 @@ block content
                 thead
                     tr
                         th Book Title
+                        th Cover Image
                         th Description
                         th Publisher
                         th Genre
                         th # of Pages
-                        th Cover Image
                         th
                 tbody
                     each book in author.books
                         tr
                             td= book.title
+                            td
+                                img.card-header-image(src=book.cover_image)
                             td= book.description
                             td= book.publisher
                             td= book.genre
                             td= book.page_amount
-                            td= book.cover_image
                             td
                                 a(href=`/books/profile/${book.id}`) View Book
                                 a(href=`/authors/${author.id}/removeBook/${book.id}`) Remove Book

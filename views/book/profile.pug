@@ -8,7 +8,8 @@ block content
         p Publisher: #{book.publisher}
         p Genre: #{book.genre}
         p # of Pages:  #{book.page_amount}
-        p Cover Image: #{book.cover_image}
+        p Cover Image:
+        img(src=book.cover_image)
         p= book.description
     div.authors
         h4 Available Authors
