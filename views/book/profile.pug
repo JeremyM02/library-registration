@@ -12,26 +12,32 @@ block content
         p= book.description
     div.authors
         h4 Available Authors
-        form(action=`/books/${book.id}/enroll/` method='post')
-            select(name='author' id='author' autocomplete=off)
-                each author in availableAuthors
-                    option(value=author.id) #{author.first_name}
-            button.button.primary(type='submit') Add as Author
+        if availableAuthors.length>0
+            form(action=`/books/${book.id}/enroll/` method='post')
+                select(name='author' id='author' autocomplete=off)
+                    each author in availableAuthors
+                        option(value=author.id) #{author.first_name}
+                button.button.primary(type='submit') Add as Author
+        else
+            p No more authors could ever have written this book.
 
         h4 Book's Authors
-        table
-            thead
-                tr
-                    th First Name
-                    th Last Name
-                    th Date of Birth
-                    th
-            tbody
-                each author in book.authors
+        if book.authors.length>0
+            table
+                thead
                     tr
-                        td= author.first_name
-                        td= author.last_name
-                        td= author.date_of_birth
-                        td
-                            a(href=`/authors/profile/${author.id}`) View Author
-                            a(href=`/books/${book.id}/removeAuthor/${author.id}`) Remove Author
+                        th First Name
+                        th Last Name
+                        th Date of Birth
+                        th
+                tbody
+                    each author in book.authors
+                        tr
+                            td= author.first_name
+                            td= author.last_name
+                            td= author.date_of_birth
+                            td
+                                a(href=`/authors/profile/${author.id}`) View Author
+                                a(href=`/books/${book.id}/removeAuthor/${author.id}`) Remove Author
+        else
+            p Nobody wrote this book
