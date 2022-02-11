@@ -1,15 +1,17 @@
 const {Books} = require('../models');
-const genres = ['classic', 'not classic'].sort();
+const genres = ['Classic', 'Historical Fiction', 'Young Adult Fiction', 'Modern'].sort();
 
 //view all
 module.exports.viewAll = async function(req, res) {
     const books = await Books.findAll();
-    res.render('books/view_all', {books});
+    res.render('book/view_all', {books});
 };
 
 //profile
 module.exports.viewProfile = async function(req, res) {
-    const book = await Books.findByPk(req.params.id);
+    const book = await Books.findByPk(req.params.id, {
+        include: 'authors'
+    });
     // const students = await Student.findAll();
     // let availableStudents = [];
     // for (let i=0; i<students.length; i++) {
@@ -17,7 +19,7 @@ module.exports.viewProfile = async function(req, res) {
     //         availableStudents.push(students[i]);
     //     }
     // }
-    res.render('books/profile', {book});
+    res.render('book/profile', {book});
 };
 
 //render add form

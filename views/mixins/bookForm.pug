@@ -3,8 +3,8 @@ mixin bookForm(book, genres, saveUrl, cancelUrl)
     div.form-container
         form(action=saveUrl method='post')
             div.form-input
-                label(for='name') Book Title
-                input(id='name' name='name' value= book.name)
+                label(for='title') Book Title
+                input(id='title' name='title' value= book.title)
 
             div.form-input
                 label(for='publisher') Publisher

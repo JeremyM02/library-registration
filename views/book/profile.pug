@@ -1,13 +1,28 @@
 extends ../layout
 
 block content
-    h3= course.name
+    h3= book.title
     a(href=`/books/edit/${book.id}`) Edit Book
     a(href=`/books/delete/${book.id}`) Delete Book
     div
-        p Title: #{book.title}
         p Publisher: #{book.publisher}
         p Genre: #{book.genre}
         p # of Pages:  #{book.page_amount}
         p Cover Image: #{book.cover_image}
         p= book.description
+    h4 Book's Authors
+    table
+        thead
+            tr
+                th First Name
+                th Last Name
+                th Date of Birth
+                th
+        tbody
+            each author in book.authors
+                tr
+                    td= author.first_name
+                    td= author.last_name
+                    td= author.date_of_birth
+                    td
+                        a(href=`/authors/profile/${author.id}`) View Author
