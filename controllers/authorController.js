@@ -1,4 +1,4 @@
-const {Author} = require(`../models`);
+const {Author, Books, BooksAuthors} = require(`../models`);
 
 
 //view_all
@@ -12,23 +12,15 @@ module.exports.viewProfile = async function(req, res) {
     const author = await Author.findByPk(req.params.id, {
         include: 'books'
     });
-    res.render('author/profile', {author})
+    const books = await Books.findAll();
+    let availableBooks = [];
+    for (let i=0; i<books.length; i++) {
+        if (!authorHasBook(author, books[i])){
+            availableBooks.push(books[i]);
+        }
+    }
+    res.render('author/profile', {author, availableBooks})
 };
-
-// module.exports.viewProfile = async function(req, res) {
-//     const student = await Student.findByPk(req.params.id, {
-//         include: 'courses'
-//     });
-//     const courses = await Course.findAll();
-//     let availableCourses = [];
-//     for (let i=0; i<courses.length; i++) {
-//         if (!studentHasCourse(student, courses[i])){
-//             availableCourses.push(courses[i]);
-//         }
-//     }
-//     res.render('student/profile', {student, availableCourses})
-// };
-
 //render add
 module.exports.renderAddForm = function (req, res) {
     const author = {
@@ -80,6 +72,25 @@ module.exports.deleteAuthor = async function(req,res) {
     res.redirect('/author');
 };
 
+//Add author to book
+module.exports.includeAuthor = async function (req, res) {
+
+    await BooksAuthors.create({
+        author_id: req.params.authorId,
+        book_id: req.body.book
+    })
+    res.redirect(`/authors/profile/${req.params.authorId}`)
+}
+
+module.exports.removeBook = async function(req, res) {
+    await BooksAuthors.destroy( {
+        where: {
+            author_id: req.params.authorId,
+            book_id: req.params.bookId
+        }
+    });
+    res.redirect(`/authors/profile/${req.params.authorId}`)
+}
 function authorHasBook(author, book) {
     for (let i=0; i<author.books.length; i++){
         if (book.id === author.books[i].id) {

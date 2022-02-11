@@ -1,4 +1,4 @@
-const {Books} = require('../models');
+const {Books, Author, BooksAuthors} = require('../models');
 const genres = ['Classic', 'Historical Fiction', 'Young Adult Fiction', 'Modern'].sort();
 
 //view all
@@ -12,14 +12,14 @@ module.exports.viewProfile = async function(req, res) {
     const book = await Books.findByPk(req.params.id, {
         include: 'authors'
     });
-    // const students = await Student.findAll();
-    // let availableStudents = [];
-    // for (let i=0; i<students.length; i++) {
-    //     if (!courseHasStudent(course, students[i])){
-    //         availableStudents.push(students[i]);
-    //     }
-    // }
-    res.render('book/profile', {book});
+    const authors = await Author.findAll();
+    let availableAuthors = [];
+    for (let i=0; i<authors.length; i++) {
+        if (!bookHasAuthor(book, authors[i])){
+            availableAuthors.push(authors[i]);
+        }
+    }
+    res.render('book/profile', {book, availableAuthors});
 };
 
 //render add form
@@ -77,17 +77,34 @@ module.exports.deleteBook = async function(req, res) {
         where: {
             id: req.params.id
         }
-        });
+    });
     res.redirect(`/books`);
 };
 
+module.exports.includeAuthor = async function (req, res) {
+    await BooksAuthors.create({
+        author_id: req.body.author,
+        book_id: req.params.bookId
+    });
+    res.redirect(`/books/profile/${req.params.bookId}`)
+}
 
-// module.exports.removeBook = async function(req, res) {
-//     await BooksAuthors.destroy( {
-//         where: {
-//             book_id: req.params.book_id,
-//             author_id: req.params.author_id
-//         }
-//     });
-//     res.redirect(`/books/profile/${req.params.bookId}`);
-// };
+
+module.exports.removeAuthor = async function(req, res) {
+    await BooksAuthors.destroy( {
+        where: {
+            book_id: req.params.bookId,
+            author_id: req.params.authorId
+        }
+    });
+    res.redirect(`/books/profile/${req.params.bookId}`);
+};
+
+function bookHasAuthor(book, author) {
+    for (let i=0; i<book.authors.length; i++){
+        if (author.id === book.authors[i].id) {
+            return true
+        }
+    }
+    return false
+}
