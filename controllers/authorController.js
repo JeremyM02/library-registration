@@ -4,14 +4,12 @@ const {Author} = require(`../models`);
 //view_all
 module.exports.viewAll = async function(req, res){
     const authors = await Author.findAll();
-    res.render('authors/view_all', {authors});
+    res.render('author/view_all', {authors});
 };
 
 //profile
 module.exports.viewProfile = async function(req, res) {
-    const author = await Author.findByPk(req.params.id, {
-        include: 'books'
-    });
+    const author = await Author.findByPk(req.params.id);
     res.render('author/profile', {author})
 };
 
@@ -77,7 +75,7 @@ module.exports.deleteAuthor = async function(req,res) {
             id: req.params.id
         }
     });
-    res.redirect('/authors');
+    res.redirect('/author');
 };
 
 function authorHasBook(author, book) {

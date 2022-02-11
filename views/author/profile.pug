@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+
+    a(href=`/authors/edit/${author.id}`) Edit Author
+    a(href=`/authors/delete/${author.id}`) Delete Author
+    div
+        h3 Name: #{author.first_name} #{author.last_name}
+        p Date Of Birth: #{author.date_of_birth}
+    //div.books
+    //    tbody
+    //        each book in author.books
+    //            tr
+    //                td= book.title
+    //                td= book.description
+    //                td= book.publisher
+    //                td= book.genre
+    //                td= book.page_amount
+    //                td= book.cover_image
+    //                td
+    //                    a(href=`/courses/profile/${course.id}`) View Course

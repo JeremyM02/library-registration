@@ -4,7 +4,7 @@ const genres = ['classic', 'not classic'].sort();
 //view all
 module.exports.viewAll = async function(req, res) {
     const books = await Books.findAll();
-    res.render('books/view_all',{books});
+    res.render('books/view_all', {books});
 };
 
 //profile
